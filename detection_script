@@ -1,0 +1,15 @@
+import cv2
+import mediapipe as mp
+mp_pose = mp.solutions.pose
+pose = mp_pose.Pose(model_complexity=1)
+
+# Assume 'frame' is the captured video frame
+rgb_frame = cv2.cvtColor(Frame, cv2.COLOR_BGR2RGB)
+result = pose.process(rgb_frame)
+
+if result.pose_landmarks:
+    features = []
+    for landmark in result.pose_landmarks.landmark:
+        features.extend([landmark.x, landmark.y, landmark.z])  # Extract x, y, z coordinates
+else:
+    features = None  # Handle cases where no pose is detected
